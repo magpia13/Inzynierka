@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client-install":"npm install --prefix client",
+    "client-install": "npm install --prefix client",
     "client": "npm start --prefix client",
-    "dev":"concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "mongoose": "^5.3.4",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+    "react-redux": "^5.0.7",
     "validator": "^10.8.0"
   },
   "devDependencies": {

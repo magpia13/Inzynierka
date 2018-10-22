@@ -15,6 +15,7 @@ module.exports = passport => {
 			.then(u => {
 				if(u){
 					return done(null,u);
+					console.log(u);
 				}
 				return done(null,false);
 			})

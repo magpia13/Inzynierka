@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 
 
 const db = require('./config/keys').mongoURI;
-mongoose.connect(db)
+mongoose.connect(db, { useNewUrlParser: true })
 	.then(() => console.log("success"))
 	.catch(err => console.log(err))
 
