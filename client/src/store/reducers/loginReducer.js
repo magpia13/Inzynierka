@@ -1,12 +1,22 @@
-import {TOKEN_RECEIVED} from '../actions/loginAction';
-import humps from 'humps';
+import isEmpty from '../../validation/isEmpty';
 
-export default (state = null, action) => {
+import { SET_CURRENT_USER } from '../actions/loginAction';
+
+const initialState = {
+  isAuthenticated: false,
+  user: {}
+};
+
+export default function(state = initialState, action) {
   switch (action.type) {
-    case TOKEN_RECEIVED:
-      return humps.camelizeKeys(action.token);
+    case SET_CURRENT_USER:
+      return {
+        ...state,
+        isAuthenticated: !isEmpty(action.user),
+        user: action.user  
+      };
     default:
       return state;
   }
 }
-  
+ 

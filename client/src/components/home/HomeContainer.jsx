@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Home from './Home';
 import userAction from 'store/actions/userAction';
+import loginAction from 'store/actions/loginAction';
 
 
 class HomeContainer extends Component { 
@@ -11,16 +12,22 @@ class HomeContainer extends Component {
 		} 
 	};    
 
-	componentDidMount(){
-				this.props.getCurrentUser();
+componentDidMount(){
+	if(this.props.token){
+		this.props.getCurrentUser()
 	}
+	this.props.getUsersList();
+}
 
 
-	render() {
-
+	render() { 
+	//	.substring(1, e.location.length-1)
+		const {users} = this.props; 
 		return (
 			<Fragment>
-				<Home />
+				<Home locations={users.length>0 ? 
+				users.filter(e =>e.location!==undefined).map((e,index) => (e.location.slice(1, -1).split(',')).concat(index))
+				: []} logout={this.props.logout}/>
 			</Fragment>
 			);
 	}
@@ -29,14 +36,20 @@ class HomeContainer extends Component {
 function mapStateToProps (state) {
   return {
     token: state.token,
+    user:state.user,
+    users:state.users
   }
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		getCurrentUser: () => dispatch(userAction.getCurrentUser())
-	}
+		getCurrentUser: () => dispatch(userAction.getCurrentUser()),
+		logout: () => dispatch(loginAction.logout()),
+		getUsersList: () => dispatch(userAction.getUsersList()),
+
+
+	} 
 }
 
 export default (connect(mapStateToProps, mapDispatchToProps)(HomeContainer));

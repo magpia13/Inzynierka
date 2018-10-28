@@ -4,22 +4,21 @@ const mongoose = require('mongoose');
 const User = mongoose.model('users');
 const keys = require('../config/keys');
 
-const obj = {};
-obj.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-obj.secretOrKey = keys.secret;
-
+const opts = {};
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = keys.secretOrKey;
+ 
 module.exports = passport => {
-	passport.use(
-		new JwtStrategy(obj, (jwt_payload, done) => {
-			User.findById(jwt_payload.id)
-			.then(u => {
-				if(u){
-					return done(null,u);
-					console.log(u);
-				}
-				return done(null,false);
-			})
-			.catch(err => console.log(err))
-		})
-	)
-}
+  passport.use(
+    new JwtStrategy(opts, (jwt_payload, done) => {
+      User.findById(jwt_payload.id)
+        .then(user => {
+          if (user) {
+            return done(null, user);
+          }
+          return done(null, false);
+        })
+        .catch(err => console.log(err));
+    })
+  );
+}; 

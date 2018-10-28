@@ -20,8 +20,7 @@ class RegistrationForm extends Component {
 						{name:'email', path:'email', type:'email'}, 
 						{name:'password', path:'password', type:'password'},
 						{name:'password2', path:'password2', type:'password'},
-
-						
+					
 						]} 
 						/>
 						<button onClick={()=>{action()}}> {'register'} </button>

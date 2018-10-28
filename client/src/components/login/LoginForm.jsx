@@ -6,8 +6,8 @@ class LoginForm extends Component {
 
 	render() { 
 
-		const {t, formData, onChange, action} = this.props;
-
+		const {t, formData, onChange, action,errors} = this.props;
+		console.log(errors);
 		return (
 			<div className="mt-30 mb-30 panel panel-default">
 				<div className="outer"> 

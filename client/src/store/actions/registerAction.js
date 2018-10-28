@@ -10,14 +10,15 @@ export const registerReceivedAction = () => {
 }
 
 
-export default (r) => dispatch => {
-  console.log(r);
+export default (r,history) => dispatch => {
   axios.post('/api/users/register/', {
     name:r.name,
     password:r.password,
     password2:r.password2,
-    email:r.email
-  })
-  .then(e => console.log(e))
+    email:r.email,
+    userType:'0',
+    location:r.location 
+  })    
+  .then(res => history.push('/'))
   .catch(err => dispatch(errorAction(err.response.data)))
 }

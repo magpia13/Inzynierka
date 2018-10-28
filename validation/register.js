@@ -17,6 +17,9 @@ module.exports = function validateRegisterData(data){
 	if(Validator.isEmpty(data.email)){
 		errors.email = 'Email field is required';
 	}
+	if(Validator.isEmpty(data.location)){
+		errors.location = 'Location field is required';
+	}
 	if(!Validator.isEmail(data.email)){
 		errors.email = 'Email is incorrect';
 	}
@@ -27,7 +30,7 @@ module.exports = function validateRegisterData(data){
 		errors.password2 = 'Passwords must be the same';
 	}
 
-	return {  
+	return {   
 		errors,
 		isValid:isEmpty(errors)
 	}

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import RegistrationPage from './common/registration/RegistrationPage';
 import LoginPage from './common/login/LoginPage';
-import HomePage from './common/home/HomePage';
+import UserIndex from './user/UserIndex';
 
 
 class Router extends Component { 
@@ -12,13 +12,13 @@ class Router extends Component {
         <Switch>
           <Route path="/registration/" component={RegistrationPage} />
           <Route path="/login/" component={LoginPage} />
-          <Route path="/" component={HomePage} />
+          <Route path="/" component={UserIndex} />
 
         </Switch>
       </BrowserRouter>
     );
-  }
+  } 
 }  
 
 export default Router;
-           
+            

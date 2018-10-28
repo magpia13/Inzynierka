@@ -13,8 +13,9 @@ router.get('/test', (req,res) => res.json({msg:"ss"}));
 
 router.post('/register',(req,res) => {
 	const {errors, isValid} = validateRegisterData(req.body);
-
+console.log(req.body);
 	if(!isValid){
+		console.log(errors);
 		return res.status(400).json(errors);
 	}
 
@@ -26,9 +27,10 @@ router.post('/register',(req,res) => {
 		else{
 			const newUser = new User({
 				name:req.body.name,
-				email:req.body.email,
+				email:req.body.email, 
 				password:req.body.password,
-
+				location:req.body.location
+ 
 			})
 			console.log(newUser);
 			bcryptjs.genSalt(10, (err,salt) => {
@@ -56,15 +58,14 @@ router.post('/login',(req,res) => {
 	.then(u => {
 		if(!u){
 				errors.email = 'User does not exist';
-			
+			 
 			return res.status(404).json(errors);
 		}
 
 		bcryptjs.compare(password, u.password).then(r => {
 			if(r) {
 				const payload = {id: u.id, name:u.name};
-				jwt.sign(payload, keys.secret, { expiresIn: 3600}, (err, token) => {
-					console.log(keys.secret);
+				jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600}, (err, token) => {
 					res.json({
 						token: 'Bearer ' + token
 					})
@@ -75,14 +76,33 @@ router.post('/login',(req,res) => {
 				return res.status(400).json(errors);
 			}
 		});
-	});
+	}); 
+});
+
+
+router.get('/usersList', (req, res) => {
+  const errors = {};
+
+  User.find()
+    .then(users => {
+      if (!users) {
+        errors.noprofile = 'There are no users';
+        return res.status(404).json(errors);
+      }
+
+      res.json(users);
+    })
+    .catch(err => res.status(404).json({ profile: 'There are no users' }));
 });
 
 router.get('/current', passport.authenticate('jwt', {session:false}), (req,res) => {
 	res.json({
 		id: req.user.id,
 		name: req.user.name,
-		email : req.user.email
+		surName:req.user.surName,
+		email : req.user.email,
+		userType: req.user.userType
+
 	})
 })
 module.exports = router;

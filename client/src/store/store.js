@@ -5,7 +5,8 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' 
 import errorReducer from './reducers/errorReducer';
 import loginReducer from './reducers/loginReducer';
-import currentUserReducer from './reducers/currentUserReducer';
+import userReducer from './reducers/userReducer';
+import usersReducer from './reducers/usersReducer';
 
 const stackReducers = (...reducers) => {
   return (state=[], action) => {
@@ -23,16 +24,18 @@ const persistConfig = {
 
 export const initialState = {
 	error:[],
-	token:null,
-  user:{}
+	user:null,
+  currentUser:{},
+  users:[]
 }
 
 export const store = createStore(
   persistReducer(persistConfig,stackReducers(
     combineReducers({
       error:errorReducer,
-      token:loginReducer,
-      user:currentUserReducer
+      user:loginReducer,
+      currentUser:userReducer,
+      users:usersReducer
 
     }),
     )),
