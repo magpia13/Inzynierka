@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import RegistrationForm from './RegistrationForm';
 import registerAction from 'store/actions/registerAction';
+import { withRouter } from 'react-router'
 
 class RegistrationFormContainer extends Component { 
 	constructor (props) {
@@ -66,7 +67,7 @@ class RegistrationFormContainer extends Component {
 		});
 	}
 	register = () => {
-		this.props.registerAction(this.state);
+		this.props.registerAction(this.state,this.props.history);
 
 	}
 
@@ -92,8 +93,8 @@ class RegistrationFormContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		registerAction: (registrationInfo) => dispatch(registerAction(registrationInfo))
+		registerAction: (registrationInfo,history) => dispatch(registerAction(registrationInfo,history))
 	}
 }
 
-export default connect(null, mapDispatchToProps)(RegistrationFormContainer);
+export default withRouter(connect(null, mapDispatchToProps)(RegistrationFormContainer));
