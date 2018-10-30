@@ -29,7 +29,7 @@ class TopBar extends Component {
                     <li>name: {currentUser.name}</li>
                     <Link to={`/`}>HOME</Link>
                     <Link to={`${match.path}myBooks`}>my books</Link>
-                    <li onClick={this.props.logout}>
+                    <li style={{cursor:'pointer'}} onClick={this.props.logout}>
                     logOut
                   </li> 
                 </ul>
