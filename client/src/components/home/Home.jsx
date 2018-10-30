@@ -34,6 +34,7 @@ class Home extends Component {
 		});
 
 		let locations = this.props.locations;
+		console.log(locations);
 
 		let contentString = <div id="content">ll</div>;
 		let infowindow = new window.google.maps.InfoWindow({
@@ -89,6 +90,14 @@ class Home extends Component {
 			});
 		});
 	}
+		componentDidUpdate(prevProps) {
+		if (prevProps.locations !== this.props.locations) {
+			this.componentDidMount()
+	
+		}
+	
+	}
+
 	render() {
 
 		return (

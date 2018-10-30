@@ -7,6 +7,7 @@ import errorReducer from './reducers/errorReducer';
 import loginReducer from './reducers/loginReducer';
 import userReducer from './reducers/userReducer';
 import usersReducer from './reducers/usersReducer';
+import registrationReducer from './reducers/registrationReducer';
 
 const stackReducers = (...reducers) => {
   return (state=[], action) => {
@@ -26,7 +27,8 @@ export const initialState = {
 	error:[],
 	user:null,
   currentUser:{},
-  users:[]
+  users:[],
+  registartionAction:null
 }
 
 export const store = createStore(
@@ -35,7 +37,8 @@ export const store = createStore(
       error:errorReducer,
       user:loginReducer,
       currentUser:userReducer,
-      users:usersReducer
+      users:usersReducer,
+      registartionAction:registrationReducer
 
     }),
     )),

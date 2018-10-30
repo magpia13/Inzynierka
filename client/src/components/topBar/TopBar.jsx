@@ -11,7 +11,8 @@ class TopBar extends Component {
   } 
 
   render() {
-    const {userName,currentUser} = this.props;
+    const {userName,currentUser,match} = this.props;
+  console.log(match);
     return (
        <nav className="user-navbar navbar navbar-default">
       <div className="container">
@@ -26,6 +27,8 @@ class TopBar extends Component {
               {Object.keys((userName||{})).length > 0 ?
                 <ul className="navLinks nav navbar-nav">
                     <li>name: {currentUser.name}</li>
+                    <Link to={`/`}>HOME</Link>
+                    <Link to={`${match.path}myBooks`}>my books</Link>
                     <li onClick={this.props.logout}>
                     logOut
                   </li> 
@@ -46,4 +49,4 @@ class TopBar extends Component {
   }
 }
 
-export default TopBar;
+export default withRouter(TopBar);

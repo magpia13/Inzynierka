@@ -32,6 +32,6 @@ export const getUsersList = () => dispatch => {
 
 export default {
   getCurrentUser,
-  getUsersList
+  getUsersList 
 }
   

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import HomeContainer from 'components/home/HomeContainer';
 
-class LoginPage extends Component {
+class HomePage extends Component {
 
   render() {
+  	console.log((this.props.location.state||{}).action);
     return (
-        <HomeContainer />
+        <HomeContainer action={(this.props.location.state||{}).action} />
     );
   } 
 }
 
-export default LoginPage;
+export default HomePage;
     

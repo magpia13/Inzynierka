@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import RegistrationForm from './RegistrationForm';
 import registerAction from 'store/actions/registerAction';
 import { withRouter } from 'react-router'
-
+import { Redirect } from 'react-router-dom';
 class RegistrationFormContainer extends Component { 
 	constructor (props) {
 		super(props)
@@ -17,6 +17,7 @@ class RegistrationFormContainer extends Component {
 			place_formatted: '',
 			place_id: '',
 			location: '',
+			redirect:false
 
 		} 
 	};    
@@ -67,14 +68,22 @@ class RegistrationFormContainer extends Component {
 		});
 	}
 	register = () => {
-		this.props.registerAction(this.state,this.props.history);
+		    const actionId =  Math.random();
+
+		this.props.registerAction(this.state,this.props.history,actionId);
 
 	}
-
+	componentDidUpdate(prevProps) {
+		if (prevProps.registartionAction !== this.props.registartionAction) {
+			this.setState({redirect:true})
+	
+		}
+	}
 	render() {
  
 		return (
 			<Fragment>
+			{this.state.redirect===true?<Redirect to='/' />:null}
 				<RegistrationForm 
 				formData={this.state} 
 				onChange={v=>this.setState(v)} 
@@ -84,17 +93,22 @@ class RegistrationFormContainer extends Component {
 				<div id='pac-container'>
 					<input id='pac-input' type='text' placeholder='Enter a location' />
 				</div>
-				<div style={{height:'200px'}} id='map' />
+				<div style={{height:'500px'}} id='map' />
 			</Fragment>
 			);
 	}
+}
+function mapStateToProps (state) {
+  return {
+    registartionAction:state.registartionAction
+  }
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		registerAction: (registrationInfo,history) => dispatch(registerAction(registrationInfo,history))
+		registerAction: (registrationInfo,history,actionId) => dispatch(registerAction(registrationInfo,history,actionId))
 	}
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(RegistrationFormContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RegistrationFormContainer));

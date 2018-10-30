@@ -9,6 +9,7 @@ class HomeContainer extends Component {
 	constructor (props) {
 		super(props)
 		this.state = {
+			action:null
 		} 
 	};    
 
@@ -17,11 +18,12 @@ componentDidMount(){
 		this.props.getCurrentUser()
 	}
 	this.props.getUsersList();
+
 }
 
 
+
 	render() { 
-	//	.substring(1, e.location.length-1)
 		const {users} = this.props; 
 		return (
 			<Fragment>
@@ -30,14 +32,15 @@ componentDidMount(){
 				: []} logout={this.props.logout}/>
 			</Fragment>
 			);
-	}
+	} 
 }
 
 function mapStateToProps (state) {
   return {
     token: state.token,
     user:state.user,
-    users:state.users
+    users:state.users,
+    registartionAction:state.registartionAction
   }
 }
 
