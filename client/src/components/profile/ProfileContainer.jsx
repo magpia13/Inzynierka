@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
 import Profile from './Profile';
+import { connect } from 'react-redux';
 
 class ProfileContainer extends Component {
 
   render() {
+  	const {user} = this.props;
+  	console.log(user);
     return (
-        <Profile />
+        <Profile user={user} />
     );
   } 
 }
+function mapStateToProps (state,ownProps) {
+	console.log(ownProps);
+	return {
+		user:state.users.find(e => e._id === ownProps.userId),
+	}
+}
 
-export default ProfileContainer;
-    
+
+function mapDispatchToProps(dispatch) {
+	return {
+	
+
+
+	} 
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);
+     
