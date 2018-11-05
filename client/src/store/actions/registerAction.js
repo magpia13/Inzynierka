@@ -19,10 +19,7 @@ export default (r,history,actionId) => dispatch => {
     password2:r.password2,
     email:r.email,
     userType:'0',
-    location:r.location 
-  })  
-    .then(() => dispatch(registerReceivedAction(actionId)))
-  
-
-  .catch(err => dispatch(errorAction(err.response.data)))
+    location:r.location
+  }).then(() => dispatch(registerReceivedAction(actionId)))
+    .catch(err => dispatch(errorAction(err.response.data)))
 }

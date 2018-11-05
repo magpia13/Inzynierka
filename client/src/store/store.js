@@ -8,6 +8,8 @@ import loginReducer from './reducers/loginReducer';
 import userReducer from './reducers/userReducer';
 import usersReducer from './reducers/usersReducer';
 import registrationReducer from './reducers/registrationReducer';
+import booksReducer from './reducers/booksReducer';
+import bookReducer from './reducers/bookReducer';
 
 const stackReducers = (...reducers) => {
   return (state=[], action) => {
@@ -28,7 +30,9 @@ export const initialState = {
 	user:null,
   currentUser:{},
   users:[],
-  registartionAction:null
+  registartionAction:null,
+  books:[],
+  book:null
 }
 
 export const store = createStore(
@@ -38,7 +42,10 @@ export const store = createStore(
       user:loginReducer,
       currentUser:userReducer,
       users:usersReducer,
-      registartionAction:registrationReducer
+      registartionAction:registrationReducer,
+      books:booksReducer,
+      book:bookReducer,
+
 
     }),
     )),

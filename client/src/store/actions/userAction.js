@@ -18,7 +18,7 @@ export const usersListReceivedAction = (users) => {
   };
 }
 
-export const getCurrentUser = () => dispatch => {
+export const getCurrentUser  = () => dispatch => {
   axios.get('/api/users/current/')
   .then(e => dispatch(userReceivedAction(e)))
   .catch(err => console.log(err))

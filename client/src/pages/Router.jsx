@@ -13,7 +13,6 @@ class Router extends Component {
           <Route path="/registration/" component={RegistrationPage} />
           <Route path="/login/" component={LoginPage} />
           <Route path="/" component={UserIndex} />
-
         </Switch>
       </BrowserRouter>
     );

@@ -8,14 +8,11 @@ const passport = require('passport');
 const validateRegisterData= require('../../validation/register');
 const validateLoginData= require('../../validation/login');
 
-router.get('/test', (req,res) => res.json({msg:"ss"}));
 
 
 router.post('/register',(req,res) => {
 	const {errors, isValid} = validateRegisterData(req.body);
-console.log(req.body);
 	if(!isValid){
-		console.log(errors);
 		return res.status(400).json(errors);
 	}
 

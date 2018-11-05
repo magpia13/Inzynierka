@@ -4,6 +4,8 @@ import RegistrationForm from './RegistrationForm';
 import registerAction from 'store/actions/registerAction';
 import { withRouter } from 'react-router'
 import { Redirect } from 'react-router-dom';
+import MapContainer from 'components/map/MapContainer';
+
 class RegistrationFormContainer extends Component { 
 	constructor (props) {
 		super(props)
@@ -12,60 +14,15 @@ class RegistrationFormContainer extends Component {
 			email: '', 
 			password: '',
 			password2:'',
-			zoom: 13,
-			maptype: 'roadmap',
-			place_formatted: '',
-			place_id: '',
-			location: '',
-			redirect:false
+			redirect:false,
+			lat:'',
+			lng:''
 
 		} 
-	};    
+	};     
 
-	componentDidMount() {
-		let map = new window.google.maps.Map(document.getElementById('map'), {
-			center: {lat: 50.29449229999999, lng: 18.67138019999993},
-			zoom: 13,
-			mapTypeId: 'roadmap',
-		});
-		map.addListener('zoom_changed', () => {
-			this.setState({
-				zoom: map.getZoom(),
-			});
-		});
-
-		map.addListener('maptypeid_changed', () => {
-			this.setState({
-				maptype: map.getMapTypeId(),
-			});
-		});
-
-		let marker = new window.google.maps.Marker({
-			map: map,
-			position: {lat: 50.29449229999999, lng: 18.67138019999993},
-		});
-		let inputNode = document.getElementById('pac-input');
-		map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(inputNode);
-		let autoComplete = new window.google.maps.places.Autocomplete(inputNode);
-
-		autoComplete.addListener('place_changed', () => {
-			let place = autoComplete.getPlace();
-			let location = place.geometry.location;
-
-			this.setState({
-				place_formatted: place.formatted_address,
-				place_id: place.place_id,
-				location: location.toString(),
-			});
-
-			map.fitBounds(place.geometry.viewport);
-			map.setCenter(location);
-
-			marker.setPlace({
-				placeId: place.place_id,
-				location: location,
-			});
-		});
+	setLocation = (lat,lng) => {
+		this.setState({location:`(${Number(lat)},${Number(lng)})`});
 	}
 	register = () => {
 		    const actionId =  Math.random();
@@ -76,11 +33,11 @@ class RegistrationFormContainer extends Component {
 	componentDidUpdate(prevProps) {
 		if (prevProps.registartionAction !== this.props.registartionAction) {
 			this.setState({redirect:true})
-	
+	 
 		}
 	}
 	render() {
- 
+ 	console.log(this.state.location);
 		return (
 			<Fragment>
 			{this.state.redirect===true?<Redirect to='/' />:null}
@@ -88,12 +45,8 @@ class RegistrationFormContainer extends Component {
 				formData={this.state} 
 				onChange={v=>this.setState(v)} 
 				action={this.register} />
-					<div>{this.state.location}</div> 
-
-				<div id='pac-container'>
-					<input id='pac-input' type='text' placeholder='Enter a location' />
-				</div>
-				<div style={{height:'500px'}} id='map' />
+				<div>{this.state.location}</div> 
+      			<MapContainer setLocation={this.setLocation} />
 			</Fragment>
 			);
 	}
