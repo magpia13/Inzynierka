@@ -1,15 +1,19 @@
 import React, { Component, Fragment } from 'react';
 import MapContainer from 'components/map/MapContainer';
+import { Link, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 
 class Home extends Component { 
   render() { 
-    const {...rest} = this.props; 
+    const {openChat,currentUser,match,...rest} = this.props; 
     return (
-      <MapContainer {...rest} />
+    	<Fragment >
+      		<MapContainer {...rest} />
+      	</Fragment>
      );
   } 
 }
 
 
-export default Home; 
+export default withRouter(Home); 

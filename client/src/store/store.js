@@ -10,6 +10,13 @@ import usersReducer from './reducers/usersReducer';
 import registrationReducer from './reducers/registrationReducer';
 import booksReducer from './reducers/booksReducer';
 import bookReducer from './reducers/bookReducer';
+import chatRoomReducer from './reducers/chatRoomReducer';
+import messagesReducer from './reducers/messagesReducer';
+import messageReducer from './reducers/messageReducer';
+import socketIdReducer from './reducers/socketIdReducer';
+import channelReducer from './reducers/channelReducer';
+import activeChannelReducer from './reducers/activeChannelReducer';
+import tokenReducer from './reducers/tokenReducer';
 
 const stackReducers = (...reducers) => {
   return (state=[], action) => {
@@ -26,13 +33,20 @@ const persistConfig = {
 }
 
 export const initialState = {
+  token:null,
 	error:[],
-	user:null,
+	user:[],
   currentUser:{},
   users:[],
   registartionAction:null,
   books:[],
-  book:null
+  book:null,
+  chatRooms:[],
+  messages:[],
+  message:{},
+  socketID:null,
+  channels:[],
+  activeChannel:{}
 }
 
 export const store = createStore(
@@ -45,6 +59,13 @@ export const store = createStore(
       registartionAction:registrationReducer,
       books:booksReducer,
       book:bookReducer,
+      chatRooms:chatRoomReducer,
+      messages:messagesReducer,
+      message:messageReducer,
+      socketID: socketIdReducer,
+      channels:channelReducer,
+      activeChannel:activeChannelReducer,
+      token:tokenReducer
 
 
     }),

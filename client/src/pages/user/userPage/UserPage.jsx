@@ -3,6 +3,7 @@ import TopBarContainer from 'components/topBar/TopBarContainer'
 
 class UserPage extends Component {
   render() {
+    console.log(this.props.match);
     return (
       <div className="userPage" style={{padding:'0px'}}>
         <TopBarContainer/>

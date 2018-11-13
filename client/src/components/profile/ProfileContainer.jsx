@@ -12,8 +12,9 @@ class ProfileContainer extends Component {
     );
   } 
 }
+
+
 function mapStateToProps (state,ownProps) {
-	console.log(ownProps);
 	return {
 		user:state.users.find(e => e._id === ownProps.userId),
 	}

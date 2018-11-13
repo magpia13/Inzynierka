@@ -2,37 +2,35 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TopBar from './TopBar';
 import loginAction from 'store/actions/loginAction';
-import userAction from 'store/actions/userAction';
 import { withRouter } from 'react-router-dom'
+import userAction from 'store/actions/userAction';
 
 class TopBarContainer extends Component {
 
   componentDidMount(){
-    if ((this.props.user||{}).isAuthenticated === true) {
-     this.props.getCurrentUser();
-    }
+   this.props.getUsersList()
   } 
 
   render() {
-    console.log(this.props.user);
+    console.log(this.props.location.pathname.split('/')[1]);
     return (
-      <TopBar currentUser={this.props.currentUser} 
-      userName={(this.props.user||{}).user} logout={()=>this.props.logout(this.props.history)}/>
+      <TopBar currentUser={this.props.user} 
+      logout={()=>this.props.logout(this.props.history)}/>
     );
   }
-}
+} 
 
-function mapStateToProps(state) {
+function mapStateToProps(state,ownProps) {
   return {
-    user: state.user,
-    currentUser:state.currentUser
+    user: state.users.find(el => el._id === (ownProps.location.pathname.split('/')[1]))
   };
 }
 
 function mapDispatchToProps(dispatch){
   return {
     logout: (history)=>dispatch(loginAction.logout(history)),
-    getCurrentUser: ()=>dispatch(userAction.getCurrentUser())
+    getCurrentUser: (id)=>dispatch(loginAction.getCurrentUser(id)),
+    getUsersList: () => dispatch(userAction.getUsersList())
   }
 }
 

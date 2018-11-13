@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
 import loginAction from 'store/actions/loginAction';
 import { withRouter } from 'react-router'
+import io from 'socket.io-client';
+
+const socket = io();
 
 class LoginFormContainer extends Component { 
 	constructor (props) {
@@ -12,32 +15,28 @@ class LoginFormContainer extends Component {
 			email: '', 
 			password: '',
 			errors:{}
-
 		} 
 	};    
 
 	login = () => {
 		this.props.login(this.state,this.props.history);
+	};
 
-	}
+
 	componentDidUpdate(prevProps) {
-		if (this.props.token !== prevProps.token) {
-			this.props.history.push('/');
-
-		}
 		if (this.props.errors !== prevProps.errors) {
 			this.setState({errors:this.props.errors});
 		}
 	}
-	
+
 	render() {
 		return ( 
 			<Fragment>
-				<LoginForm 
-				errors={this.state.errors}
-				formData={this.state} 
-				onChange={v=>this.setState(v)} 
-				action={this.login} />
+			<LoginForm 
+			errors={this.state.errors}
+			formData={this.state} 
+			onChange={v=>this.setState(v)} 
+			action={this.login} />
 			</Fragment>
 			);
 	}

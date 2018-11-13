@@ -4,8 +4,9 @@ import MyBooksContainer from 'components/myBooks/MyBooksContainer';
 class MyBooksPage extends Component {
 
   render() {
+  	console.log("sfjfkdj");
     return (
-        <MyBooksContainer />
+        <MyBooksContainer location={this.props.location}/>
     );
   } 
 }

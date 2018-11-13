@@ -1,28 +1,35 @@
 import axios from 'axios';
 import errorAction from './errorAction';
-import {getCurrentUser} from './userAction';
 import setToken from '../../utils/setToken';
 import jwt_decode from 'jwt-decode';
+import { initialState } from '../store';
 
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const LOGOUT = 'LOGOUT';
 
 export const setCurrentUser = decoded => {
-  console.log(decoded);
   return {
     type: SET_CURRENT_USER,
     user: decoded
   };
 };
-
-export const logout = () => dispatch => {
+export const logoutAction = decoded => {
+  return {
+    type: LOGOUT,
+    user: decoded
+  };
+};
+export const logout = (history) => dispatch => {
   localStorage.removeItem('jwtToken');
 
   setToken(false);
-  dispatch(setCurrentUser({}));
+  dispatch(logoutAction([]))
+  history.push('/')
 
 }
 
 export const login = (r,history) => (dispatch) => {
+  console.log(history);
   axios.post('/api/users/login/', {
     password:r.password,
     email:r.email
@@ -34,12 +41,22 @@ export const login = (r,history) => (dispatch) => {
 
     const decoded = jwt_decode(token);
     dispatch(setCurrentUser(decoded));
-  }).then(res => history.push('/'))
+    history.push({
+    pathname: '/'+decoded.id,
+    state: { user: decoded.id }
+    }) 
+  })
   .catch(err => dispatch(errorAction(err)))
 }   
 
-
+export const getCurrentUser  = (id) => dispatch => {
+  axios.get('/api/users/current/'+id)
+  .then(e => dispatch(setCurrentUser(e)))
+  .catch(err => console.log(err))
+}
 export default {
   logout,
-  login
+  login,
+  getCurrentUser,
+
 } 

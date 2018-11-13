@@ -25,7 +25,7 @@ class RegistrationFormContainer extends Component {
 		this.setState({location:`(${Number(lat)},${Number(lng)})`});
 	}
 	register = () => {
-		    const actionId =  Math.random();
+		const actionId =  Math.random();
 
 		this.props.registerAction(this.state,this.props.history,actionId);
 
@@ -33,11 +33,11 @@ class RegistrationFormContainer extends Component {
 	componentDidUpdate(prevProps) {
 		if (prevProps.registartionAction !== this.props.registartionAction) {
 			this.setState({redirect:true})
-	 
+
 		}
 	}
 	render() {
- 	console.log(this.state.location);
+		console.log(this.state.location);
 		return (
 			<Fragment>
 			{this.state.redirect===true?<Redirect to='/' />:null}
@@ -46,15 +46,15 @@ class RegistrationFormContainer extends Component {
 				onChange={v=>this.setState(v)} 
 				action={this.register} />
 				<div>{this.state.location}</div> 
-      			<MapContainer setLocation={this.setLocation} />
+				<MapContainer setLocation={this.setLocation} />
 			</Fragment>
 			);
 	}
 }
 function mapStateToProps (state) {
-  return {
-    registartionAction:state.registartionAction
-  }
+	return {
+		registartionAction:state.registartionAction
+	}
 }
 
 

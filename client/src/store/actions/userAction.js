@@ -1,14 +1,7 @@
 import axios from 'axios';
 
-export const USER_RECEIVED = 'USER_RECEIVED';
 export const USERS_LIST_RECEIVED = 'USERS_LIST_RECEIVED';
 
-export const userReceivedAction = (currentUser) => {
-  return {
-    type: USER_RECEIVED,
-    currentUser
-  };
-}
 
 
 export const usersListReceivedAction = (users) => {
@@ -18,11 +11,7 @@ export const usersListReceivedAction = (users) => {
   };
 }
 
-export const getCurrentUser  = () => dispatch => {
-  axios.get('/api/users/current/')
-  .then(e => dispatch(userReceivedAction(e)))
-  .catch(err => console.log(err))
-}
+
 
 export const getUsersList = () => dispatch => {
   axios.get('/api/users/usersList/')
@@ -31,7 +20,6 @@ export const getUsersList = () => dispatch => {
 }
 
 export default {
-  getCurrentUser,
   getUsersList 
 }
   
