@@ -52,27 +52,23 @@ router.post('/', passport.authenticate('jwt', {session:false}), upload.single('i
 
   new Book(newBook).save().then(book => res.json({image:req.file,...book}));
   var id = newBook.user;
-  User.findById( id, (err, producto)=> {
-    console.log(producto,"ddd");
+  User.findById( id, (err, data)=> {
     if (err) {
       return res.status(500).json({
         ok: false,
-        mensaje: 'Error al buscar producto',
         errors: err
       });
     }
 
-    if (!producto) {
+    if (!data) {
       return res.status(400).json({
         ok: false,
-        mensaje: 'No existe un producto con ese ID',
-        errors: { message: 'No existe un producto con ese ID' }
+        errors: { message: 'It doesn`t exist' }
       });
     }
 
-    producto.books.push(newBook);
-    console.log(producto);
-    producto.save();
+    data.books.push(newBook);
+    data.save();
   })
 })
 
